@@ -1,48 +1,132 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				padding-top: 2rem;
+			}
+			.hero-intro {
+				margin-bottom: 4rem;
+				text-align: left;
+			}
+			.hero-intro h1 {
+				font-size: 3rem;
+				margin-bottom: 1rem;
+				letter-spacing: -0.05em;
+			}
+			.hero-intro p {
+				font-size: 1.25rem;
+				color: var(--text-secondary);
+				max-width: 600px;
+			}
+
+			/* Grid Layout */
+			ul {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+				gap: 3rem;
+				list-style-type: none;
+				padding: 0;
+			}
+			
+			li {
+				transition: transform 0.2s ease;
+			}
+			
+			li:hover {
+				transform: translateY(-2px);
+			}
+
+			li img {
+				margin-bottom: 1rem;
+				border-radius: 8px;
+				aspect-ratio: 16/9;
+				object-fit: cover;
+				background: var(--card-bg);
+				border: 1px solid var(--border-color);
+			}
+
+			.title {
+				font-size: 1.5rem;
+				margin-bottom: 0.5rem;
+				line-height: 1.3;
+				color: var(--text-color);
+			}
+
+			.date {
+				font-size: 0.9rem;
+				color: var(--text-secondary);
+			}
+
+			a:hover .title {
+				text-decoration: underline;
+				text-decoration-thickness: 1px;
+				text-underline-offset: 4px;
+			}
+			
+			/* First item as featured */
+			@media (min-width: 768px) {
+				ul li:first-child {
+					grid-column: 1 / -1;
+					display: grid;
+					grid-template-columns: 1.5fr 1fr;
+					gap: 2rem;
+					align-items: center;
+					margin-bottom: 2rem;
+				}
+				ul li:first-child img {
+					margin-bottom: 0;
+					aspect-ratio: 2/1;
+				}
+				ul li:first-child .title {
+					font-size: 2.5rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="hero-intro">
+				<h1>Terminal thoughts.</h1>
+				<p>{SITE_DESCRIPTION}</p>
+			</section>
+			<section>
+				<ul>
+					{
+						posts.map((post) => (
+							<li>
+								<a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/blog/${post.id}/`}>
+									{post.data.heroImage && (
+										<Image width={720} height={360} src={post.data.heroImage} alt="" />
+									)}
+									<div>
+										<h4 class="title">{post.data.title}</h4>
+										<p class="date">
+											<FormattedDate date={post.data.pubDate} />
+										</p>
+									</div>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
 		</main>
 		<Footer />
 	</body>

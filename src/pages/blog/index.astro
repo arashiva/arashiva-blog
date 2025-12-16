@@ -18,70 +18,55 @@ const posts = (await getCollection('blog')).sort(
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			main {
-				width: 960px;
+				width: 100%;
+				max-width: var(--max-width);
+				margin: 0 auto;
 			}
 			ul {
-				display: flex;
-				flex-wrap: wrap;
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 				gap: 2rem;
 				list-style-type: none;
 				margin: 0;
 				padding: 0;
 			}
 			ul li {
-				width: calc(50% - 1rem);
+				transition: transform 0.2s ease;
 			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
+			ul li:hover {
+				transform: translateY(-2px);
 			}
 			ul li img {
 				margin-bottom: 0.5rem;
-				border-radius: 12px;
+				border-radius: 8px;
+				aspect-ratio: 16/9;
+				object-fit: cover;
+				background: var(--card-bg);
+				border: 1px solid var(--border-color);
 			}
 			ul li a {
 				display: block;
 			}
 			.title {
 				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
+				color: var(--text-color);
+				line-height: 1.2;
+				font-size: 1.5rem;
 			}
 			.date {
 				margin: 0;
-				color: rgb(var(--gray));
+				color: var(--text-secondary);
+				font-size: 0.9rem;
 			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
+			ul li a:hover .title {
+				text-decoration: underline;
+				text-decoration-thickness: 1px;
+				text-underline-offset: 4px;
+				color: var(--text-color);
 			}
 			@media (max-width: 720px) {
 				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
+					grid-template-columns: 1fr;
 				}
 			}
 		</style>
@@ -94,7 +79,8 @@ const posts = (await getCollection('blog')).sort(
 					{
 						posts.map((post) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
+								{/* Fix: Prepend BASE_URL to the blog post link */}
+								<a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/blog/${post.id}/`}>
 									{post.data.heroImage && (
 										<Image width={720} height={360} src={post.data.heroImage} alt="" />
 									)}

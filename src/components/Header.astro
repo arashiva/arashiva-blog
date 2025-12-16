@@ -5,10 +5,7 @@ import { SITE_TITLE } from '../consts';
 
 <header>
 	<nav>
-		<div class="terminal-header">
-			<span class="prompt">root@arashiva:~$</span>
-			<h2>{SITE_TITLE}</h2>
-		</div>
+		<h2><a href={import.meta.env.BASE_URL}>{SITE_TITLE}</a></h2>
 		<div class="internal-links">
 			<HeaderLink href="/">home</HeaderLink>
 			<HeaderLink href="/blog">blog</HeaderLink>
@@ -16,40 +13,38 @@ import { SITE_TITLE } from '../consts';
 		</div>
 	</nav>
 </header>
-
 <style>
 	header {
 		margin: 0;
-		padding: 2em 0;
-		background: var(--bg);
-		border-bottom: 1px solid var(--border);
-	}
-	
-	nav {
-		max-width: 900px;
-		margin: 0 auto;
 		padding: 0 1em;
+		background: var(--bg-color);
+		box-shadow: 0 2px 8px rgba(var(--black), 5%);
 	}
-	
-	.terminal-header {
-		display: flex;
-		align-items: center;
-		gap: 1em;
-		margin-bottom: 1em;
-	}
-	
-	.prompt {
-		color: var(--accent);
-		font-weight: 700;
-	}
-	
 	h2 {
 		margin: 0;
-		font-size: 1.5em;
+		font-size: 1em;
 	}
-	
+
+	h2 a,
+	h2 a.active {
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.5rem 0;
+		max-width: var(--max-width);
+		margin: 0 auto;
+	}
 	.internal-links {
 		display: flex;
-		gap: 1.5em;
+		gap: 1.5rem;
+	}
+	
+	@media (max-width: 720px) {
+		.social-links {
+			display: none;
+		}
 	}
 </style>
