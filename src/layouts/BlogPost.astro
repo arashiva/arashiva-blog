@@ -14,73 +14,108 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: 100%;
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: var(--text-color);
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: var(--text-secondary);
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
 	</head>
-
 	<body>
 		<Header />
 		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
+			<article class="post">
+				<header class="post-head">
+					<div class="meta">
+						<FormattedDate date={pubDate} />
+						{updatedDate && (
+							<span class="updated">
+								· updated <FormattedDate date={updatedDate} />
+							</span>
+						)}
 					</div>
+					<h1>{title}</h1>
+					{description && <p class="desc">{description}</p>}
+				</header>
+
+				{heroImage && (
+					<div class="hero-image">
+						<Image width={1200} height={600} src={heroImage} alt="" />
+					</div>
+				)}
+
+				<div class="prose glass-pane">
 					<slot />
 				</div>
 			</article>
 		</main>
 		<Footer />
+
+		<style>
+			.post { padding-top: 1.5rem; }
+			.post-head {
+				padding: 2rem 0 2.5rem;
+				text-align: left;
+			}
+			.meta {
+				font-size: 0.8rem;
+				color: var(--text-faint);
+				margin-bottom: 1rem;
+				font-variant-numeric: tabular-nums;
+			}
+			.updated { margin-left: 0.25rem; }
+			.post-head h1 {
+				font-size: clamp(2rem, 5vw, 2.75rem);
+				font-weight: 400;
+				letter-spacing: -0.04em;
+				line-height: 1.1;
+				margin: 0 0 0.85rem;
+			}
+			.desc {
+				color: var(--text-secondary);
+				font-size: 1rem;
+				margin: 0;
+				max-width: 60ch;
+			}
+			.hero-image {
+				margin: 0 0 2rem;
+			}
+			.hero-image img {
+				width: 100%;
+				border-radius: var(--radius);
+				border: 1px solid var(--glass-border);
+			}
+
+			.prose {
+				padding: 2rem 2.25rem;
+				font-size: 0.98rem;
+				line-height: 1.75;
+			}
+			.glass-pane {
+				background: var(--glass-bg);
+				border: 1px solid var(--glass-border);
+				border-radius: var(--radius);
+				backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+				-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+				box-shadow: var(--glass-shadow);
+			}
+			.prose :global(h2) {
+				font-size: 1.35rem;
+				margin-top: 2.25rem;
+				margin-bottom: 0.9rem;
+			}
+			.prose :global(h3) {
+				font-size: 1.05rem;
+				margin-top: 1.75rem;
+				margin-bottom: 0.6rem;
+			}
+			.prose :global(p) {
+				color: rgba(245, 247, 250, 0.85);
+			}
+			.prose :global(a) {
+				border-bottom: 1px solid var(--glass-border-strong);
+			}
+			.prose :global(a:hover) {
+				border-bottom-color: var(--text-color);
+			}
+
+			@media (max-width: 540px) {
+				.prose { padding: 1.4rem 1.25rem; }
+			}
+		</style>
 	</body>
 </html>

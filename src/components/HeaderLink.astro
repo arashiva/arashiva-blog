@@ -9,22 +9,11 @@ const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
 const subpath = pathname.match(/[^\/]+/g);
 const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 
-// Ensure href includes base if it's an internal link
-const destination = href.startsWith('http') || href.startsWith('#') 
-  ? href
-  : import.meta.env.BASE_URL.replace(/\/$/, '') + href;
+const destination = (typeof href === 'string' && (href.startsWith('http') || href.startsWith('#')))
+	? href
+	: import.meta.env.BASE_URL.replace(/\/$/, '') + href;
 ---
 
 <a href={destination} class:list={[className, { active: isActive }]} {...props}>
 	<slot />
 </a>
-<style>
-	a {
-		display: inline-block;
-		text-decoration: none;
-	}
-	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
-	}
-</style>

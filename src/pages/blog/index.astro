@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
@@ -10,91 +9,84 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 100%;
-				max-width: var(--max-width);
-				margin: 0 auto;
-			}
-			ul {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				transition: transform 0.2s ease;
-			}
-			ul li:hover {
-				transform: translateY(-2px);
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 8px;
-				aspect-ratio: 16/9;
-				object-fit: cover;
-				background: var(--card-bg);
-				border: 1px solid var(--border-color);
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: var(--text-color);
-				line-height: 1.2;
-				font-size: 1.5rem;
-			}
-			.date {
-				margin: 0;
-				color: var(--text-secondary);
-				font-size: 0.9rem;
-			}
-			ul li a:hover .title {
-				text-decoration: underline;
-				text-decoration-thickness: 1px;
-				text-underline-offset: 4px;
-				color: var(--text-color);
-			}
-			@media (max-width: 720px) {
-				ul {
-					grid-template-columns: 1fr;
-				}
-			}
-		</style>
+		<BaseHead title={`blog — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								{/* Fix: Prepend BASE_URL to the blog post link */}
-								<a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
+			<section class="page-head">
+				<h1>blog</h1>
+				<p class="dim">an archive of notes, mostly written for myself.</p>
 			</section>
+
+			<ul>
+				{posts.map((post) => (
+					<li>
+						<a href={`${base}/blog/${post.id}/`}>
+							<div class="row">
+								<span class="row-title">{post.data.title}</span>
+								<span class="row-date">
+									<FormattedDate date={post.data.pubDate} />
+								</span>
+							</div>
+							{post.data.description && (
+								<p class="row-desc">{post.data.description}</p>
+							)}
+						</a>
+					</li>
+				))}
+			</ul>
 		</main>
 		<Footer />
+
+		<style>
+			.page-head { padding: 2rem 0 2.5rem; }
+			.page-head h1 {
+				font-size: 2rem;
+				font-weight: 400;
+				letter-spacing: -0.04em;
+				margin: 0 0 0.5rem;
+			}
+			.dim { color: var(--text-secondary); font-size: 0.95rem; margin: 0; }
+
+			ul {
+				list-style: none; padding: 0; margin: 0;
+				background: var(--glass-bg);
+				border: 1px solid var(--glass-border);
+				border-radius: var(--radius);
+				backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+				-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+				box-shadow: var(--glass-shadow);
+				overflow: hidden;
+			}
+			li + li { border-top: 1px solid var(--glass-border); }
+			li a {
+				display: block; padding: 1.1rem 1.25rem; border: 0;
+				transition: background 0.2s ease;
+			}
+			li a:hover { background: var(--glass-bg-strong); border: 0; }
+			.row {
+				display: flex; justify-content: space-between;
+				align-items: baseline; gap: 1rem;
+			}
+			.row-title { font-size: 1rem; color: var(--text-color); font-weight: 500; }
+			.row-date {
+				font-size: 0.75rem; color: var(--text-faint);
+				white-space: nowrap; font-variant-numeric: tabular-nums;
+			}
+			.row-desc {
+				margin: 0.4rem 0 0; font-size: 0.85rem;
+				color: var(--text-secondary); line-height: 1.55;
+			}
+			@media (max-width: 540px) {
+				.row { flex-direction: column; gap: 0.25rem; }
+			}
+		</style>
 	</body>
 </html>

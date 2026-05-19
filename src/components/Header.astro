@@ -4,8 +4,11 @@ import { SITE_TITLE } from '../consts';
 ---
 
 <header>
-	<nav>
-		<h2><a href={import.meta.env.BASE_URL}>{SITE_TITLE}</a></h2>
+	<nav class="glass-nav">
+		<a class="brand" href={import.meta.env.BASE_URL}>
+			<span class="brand-mark">~</span>
+			<span class="brand-name">{SITE_TITLE.toLowerCase()}</span>
+		</a>
 		<div class="internal-links">
 			<HeaderLink href="/">home</HeaderLink>
 			<HeaderLink href="/blog">blog</HeaderLink>
@@ -13,38 +16,71 @@ import { SITE_TITLE } from '../consts';
 		</div>
 	</nav>
 </header>
+
 <style>
 	header {
-		margin: 0;
-		padding: 0 1em;
-		background: var(--bg-color);
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		padding: 1rem 1.25rem 0;
+		display: flex;
+		justify-content: center;
 	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-	}
-	nav {
+	.glass-nav {
+		width: 100%;
+		max-width: var(--max-width);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 1.5rem 0;
-		max-width: var(--max-width);
-		margin: 0 auto;
+		padding: 0.7rem 1.1rem;
+		background: var(--glass-bg);
+		border: 1px solid var(--glass-border);
+		border-radius: 999px;
+		backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+		box-shadow: var(--glass-shadow);
+	}
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--text-color);
+		border: 0;
+	}
+	.brand-mark {
+		color: var(--text-faint);
+	}
+	.brand-name {
+		letter-spacing: 0.02em;
 	}
 	.internal-links {
 		display: flex;
-		gap: 1.5rem;
+		gap: 0.25rem;
+		font-size: 0.85rem;
 	}
-	
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
+	.internal-links :global(a) {
+		padding: 0.35rem 0.85rem;
+		border-radius: 999px;
+		color: var(--text-secondary);
+		border: 1px solid transparent;
+		transition: all 0.2s ease;
+	}
+	.internal-links :global(a:hover) {
+		color: var(--text-color);
+		background: var(--glass-bg-strong);
+		border-color: var(--glass-border);
+	}
+	.internal-links :global(a.active) {
+		color: var(--text-color);
+		background: var(--glass-bg-strong);
+		border-color: var(--glass-border-strong);
+		font-weight: 500;
+		text-decoration: none;
+	}
+	@media (max-width: 540px) {
+		.glass-nav { padding: 0.55rem 0.85rem; }
+		.internal-links :global(a) { padding: 0.3rem 0.65rem; }
 	}
 </style>
