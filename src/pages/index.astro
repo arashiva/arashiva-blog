@@ -23,10 +23,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 			<section class="hero">
 				<div class="hero-tag">
 					<span class="dot"></span>
-					<span>{SITE_TITLE.toLowerCase()} // notes</span>
+					<span>{SITE_TITLE.toLowerCase()} // est. 2026</span>
 				</div>
-				<h1>terminal thoughts.</h1>
+				<h1>
+					<span class="line">between the breath,</span>
+					<span class="line dim">and the next.</span>
+				</h1>
 				<p class="hero-sub">{SITE_DESCRIPTION}</p>
+				<div class="hero-rule"></div>
 			</section>
 
 			<section class="posts">
@@ -59,58 +63,90 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 		<style>
 			.hero {
-				padding: 3rem 0 3.5rem;
+				padding: 4rem 0 3.5rem;
 			}
 			.hero-tag {
 				display: inline-flex;
 				align-items: center;
 				gap: 0.5rem;
-				font-size: 0.75rem;
+				font-size: 0.7rem;
 				color: var(--text-faint);
-				padding: 0.3rem 0.7rem;
+				padding: 0.32rem 0.75rem;
 				background: var(--glass-bg);
 				border: 1px solid var(--glass-border);
 				border-radius: 999px;
 				backdrop-filter: blur(12px);
 				-webkit-backdrop-filter: blur(12px);
-				margin-bottom: 1.5rem;
+				margin-bottom: 2rem;
+				letter-spacing: 0.05em;
 			}
 			.dot {
 				width: 6px; height: 6px; border-radius: 50%;
 				background: #6ee7b7;
-				box-shadow: 0 0 8px rgba(110, 231, 183, 0.6);
+				box-shadow: 0 0 10px rgba(110, 231, 183, 0.65);
+				animation: pulse 3s ease-in-out infinite;
 			}
+			@keyframes pulse {
+				0%, 100% { opacity: 1; }
+				50% { opacity: 0.5; }
+			}
+
 			.hero h1 {
-				font-size: clamp(2.25rem, 6vw, 3.25rem);
+				font-size: clamp(2.4rem, 6.5vw, 3.6rem);
 				letter-spacing: -0.05em;
-				font-weight: 400;
-				line-height: 1.05;
-				margin: 0 0 1rem;
+				font-weight: 300;
+				line-height: 1.08;
+				margin: 0 0 1.5rem;
+				display: flex;
+				flex-direction: column;
+				gap: 0.1em;
 			}
+			.hero h1 .line {
+				display: block;
+				background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.78) 100%);
+				-webkit-background-clip: text;
+				background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+			.hero h1 .line.dim {
+				background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.28) 100%);
+				-webkit-background-clip: text;
+				background-clip: text;
+				-webkit-text-fill-color: transparent;
+				font-style: italic;
+				letter-spacing: -0.04em;
+			}
+
 			.hero-sub {
 				font-size: 1rem;
 				color: var(--text-secondary);
 				max-width: 540px;
-				margin: 0;
+				margin: 0 0 2rem;
+			}
+			.hero-rule {
+				width: 60px;
+				height: 1px;
+				background: linear-gradient(90deg, var(--glass-border-strong), transparent);
 			}
 
-			.posts { margin-top: 1rem; }
+			.posts { margin-top: 1.5rem; }
 
 			.section-head {
 				display: flex;
 				align-items: center;
 				gap: 0.75rem;
 				margin-bottom: 1.25rem;
-				font-size: 0.75rem;
+				font-size: 0.7rem;
 				color: var(--text-faint);
 				text-transform: lowercase;
-				letter-spacing: 0.08em;
+				letter-spacing: 0.12em;
 			}
 			.section-head .rule {
 				flex: 1;
 				height: 1px;
 				background: var(--glass-border);
 			}
+			.section-head .count { font-variant-numeric: tabular-nums; }
 
 			ul {
 				list-style: none;
@@ -129,14 +165,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 			}
 			li a {
 				display: block;
-				padding: 1.1rem 1.25rem;
+				padding: 1.15rem 1.35rem;
 				border: 0;
-				transition: background 0.2s ease;
+				transition: background 0.25s ease, padding-left 0.25s ease;
+				position: relative;
+			}
+			li a::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				width: 2px;
+				background: var(--text-color);
+				opacity: 0;
+				transition: opacity 0.25s ease;
 			}
 			li a:hover {
 				background: var(--glass-bg-strong);
+				padding-left: 1.6rem;
 				border: 0;
 			}
+			li a:hover::before { opacity: 0.6; }
+
 			.row {
 				display: flex;
 				justify-content: space-between;
@@ -149,20 +200,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 				font-weight: 500;
 			}
 			.row-date {
-				font-size: 0.75rem;
+				font-size: 0.72rem;
 				color: var(--text-faint);
 				white-space: nowrap;
 				font-variant-numeric: tabular-nums;
+				letter-spacing: 0.04em;
 			}
 			.row-desc {
 				margin: 0.4rem 0 0;
 				font-size: 0.85rem;
 				color: var(--text-secondary);
-				line-height: 1.55;
+				line-height: 1.6;
 			}
 
 			@media (max-width: 540px) {
 				.row { flex-direction: column; gap: 0.25rem; }
+				li a:hover { padding-left: 1.35rem; }
 			}
 		</style>
 	</body>

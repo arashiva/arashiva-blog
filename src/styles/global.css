@@ -185,6 +185,102 @@ blockquote {
 	font-style: italic;
 }
 
+/* Pull-quote — large, centered, for impact */
+.pullquote {
+	margin: 2.5rem 0;
+	padding: 1.5rem 1.5rem;
+	text-align: center;
+	font-size: 1.15rem;
+	line-height: 1.5;
+	font-style: italic;
+	color: var(--text-color);
+	background: var(--glass-bg);
+	border: 1px solid var(--glass-border);
+	border-radius: var(--radius);
+	backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+	-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+	position: relative;
+}
+.pullquote::before,
+.pullquote::after {
+	content: '';
+	display: block;
+	width: 24px;
+	height: 1px;
+	background: var(--glass-border-strong);
+	margin: 0.5rem auto;
+}
+.pullquote cite {
+	display: block;
+	font-size: 0.75rem;
+	font-style: normal;
+	color: var(--text-faint);
+	margin-top: 0.6rem;
+	letter-spacing: 0.05em;
+}
+
+/* Callout — info / note */
+.callout {
+	margin: 1.75rem 0;
+	padding: 1rem 1.15rem;
+	background: var(--glass-bg);
+	border: 1px solid var(--glass-border);
+	border-left: 2px solid var(--glass-border-strong);
+	border-radius: var(--radius-sm);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	font-size: 0.92rem;
+	color: var(--text-secondary);
+}
+.callout .callout-label {
+	display: inline-block;
+	font-size: 0.68rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--text-faint);
+	margin-bottom: 0.5rem;
+}
+.callout.note { border-left-color: rgba(110, 231, 183, 0.5); }
+.callout.warn { border-left-color: rgba(251, 191, 114, 0.5); }
+.callout p:last-child { margin-bottom: 0; }
+
+/* Figure — image with caption */
+figure {
+	margin: 2rem 0;
+}
+figure img {
+	width: 100%;
+	border: 1px solid var(--glass-border);
+	border-radius: var(--radius);
+}
+figcaption {
+	margin-top: 0.7rem;
+	font-size: 0.78rem;
+	color: var(--text-faint);
+	text-align: center;
+	letter-spacing: 0.02em;
+}
+
+/* Section divider — for breaking essays into parts */
+.section-break {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6rem;
+	margin: 3rem 0;
+	color: var(--text-faint);
+	font-size: 0.8rem;
+	letter-spacing: 0.5em;
+}
+.section-break::before,
+.section-break::after {
+	content: '';
+	flex: 1;
+	max-width: 80px;
+	height: 1px;
+	background: var(--glass-border);
+}
+
 /* Selection */
 ::selection {
 	background: rgba(255, 255, 255, 0.18);

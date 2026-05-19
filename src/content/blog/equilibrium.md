@@ -5,26 +5,93 @@ pubDate: '2026-05-19'
 heroImage: '../../assets/equilibrium.jpg'
 ---
 
-## the still point
+<!--
+  Structure template — replace the placeholder text inside each block
+  with your own writing. Every block is a real, styled element you'll
+  see rendered on the page.
+-->
 
-There is a moment, in any system, where the forces pushing one way and the forces pulling the other settle into something almost like silence. Not absence — balance. The same noise, just no longer moving.
+## i. opening
 
-I keep returning to it.
+_A short opening paragraph. One or two sentences that set the temperature
+of the essay. Quiet, slow, oriented toward a question rather than an
+answer. This is the part that decides whether someone stays._
 
-## three readings
+Write the second paragraph here — a little more direct. Name the thing
+you actually want to talk about, in plain language.
 
-1. **Physical.** A pendulum at rest. Heat dispersed evenly through a room. Nothing wants to move because nothing has anywhere left to go.
-2. **Mental.** The state after a long day where the thoughts stop arguing. You aren't empty — you just stopped pulling on yourself.
-3. **Built.** Software that holds its shape under load. A function that returns the same answer no matter how many times you call it.
+<div class="pullquote">
+  the still point of the turning world.
+  <cite>— t.s. eliot, four quartets</cite>
+</div>
 
-## why it matters
+## ii. the question
 
-Most things we build are biased toward motion. New features, new posts, new tabs. But the systems I trust most — the codebases, the people, the hours — are the ones that know how to sit still without breaking.
+Use this section to sit with the question for a while before reaching
+for an answer. Two or three paragraphs of unhurried thinking.
 
-> Equilibrium is not the opposite of energy. It is energy that has learned where to stand.
+- a first thread
+- a second thread
+- a third thread that connects them
 
-## what comes next
+<div class="callout note">
+  <span class="callout-label">note</span>
+  <p>Use a callout like this for an aside — a small observation, a
+  definition, a gentle warning to the reader. It sits beside the main
+  flow without breaking it.</p>
+</div>
 
-This blog is the first object in a longer project: writing toward a kind of stillness I can return to. Not minimalism for its own sake. Just clarity, in the places I can afford it.
+## iii. an image
 
-More soon.
+A line or two of context for the image below — what it is, why it's here.
+
+<figure>
+  <img src="/equilibrium.jpg" alt="describe the image" />
+  <figcaption>a caption. small, faint, italicizable if needed.</figcaption>
+</figure>
+
+After the image, a paragraph that picks up the thought again. The image
+is not decoration — it earns its place by changing what comes next.
+
+<div class="section-break">· · ·</div>
+
+## iv. the turn
+
+Every essay has a moment where it pivots from observation into claim.
+This is yours. Write it short and direct.
+
+> A more intimate quote — a single sentence, indented, weighted. Use
+> this for something you want the reader to slow down on.
+
+Then a paragraph that lives inside the quote's shadow. Don't explain
+the quote. Let it sit.
+
+## v. evidence, or examples
+
+Sometimes the essay needs to ground itself. Use a numbered list when
+order matters, or code/inline emphasis for precision.
+
+1. **The first example.** A short sentence that names a concrete thing.
+2. **The second.** Another concrete thing, in parallel structure.
+3. **The third.** A third — the rhythm of three is enough; resist a fourth.
+
+You can use `inline code` for technical terms, names, or to mark a word
+you want the reader to notice without italicizing.
+
+## vi. what i now think
+
+The synthesis. Two short paragraphs. Say what you came to. Don't
+overclaim — equilibrium isn't certainty.
+
+<div class="callout warn">
+  <span class="callout-label">caveat</span>
+  <p>If your conclusion has a soft edge — a thing you're still not sure
+  about — name it here. Honest essays end honest.</p>
+</div>
+
+## vii. closing
+
+A short final paragraph. Bring it back to the breath. Bring it back to
+the reader. One sentence is enough.
+
+_more soon._
