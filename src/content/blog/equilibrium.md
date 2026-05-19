@@ -2,6 +2,7 @@
 title: 'equilibrium'
 description: 'On the quiet point where input and output finally balance.'
 pubDate: '2026-05-19'
+heroImage: '../../assets/equilibrium.jpg'
 ---
 
 ## the still point
